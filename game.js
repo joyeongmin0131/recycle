@@ -63,6 +63,24 @@ const SFX = (() => {
 })();
 
 // ================================================================
+//  이미지 사전 로드 모듈
+//  게임 시작 전에 모든 사진을 브라우저 캐시에 올려놓아
+//  게임 중 로딩 없이 바로 표시됩니다
+// ================================================================
+const imgCache = {};
+
+function preloadImage(src) {
+  if (!src || imgCache[src]) return;
+  const img = new Image();
+  img.src = src;
+  imgCache[src] = img;
+}
+
+function preloadAllImages() {
+  CONFIG.items.forEach(item => preloadImage(item.image));
+}
+
+// ================================================================
 //  게임 메인 모듈
 // ================================================================
 const Game = (() => {
@@ -254,8 +272,8 @@ const Game = (() => {
 
     results.push({ q, userPick: i, ok, pts, bonus: isBonus });
 
-    // 0.7초 후 다음 문제 (시간이 남아 있을 때만)
-    setTimeout(() => { if (gameTimeLeft > 0) loadQ(); }, 700);
+    // 0.4초 후 다음 문제 (시간이 남아 있을 때만)
+    setTimeout(() => { if (gameTimeLeft > 0) loadQ(); }, 400);
   }
 
   /* ── +점수 팝업 애니메이션 ─────────────────────── */
@@ -275,7 +293,7 @@ const Game = (() => {
     disableButtons();
     SFX.end();           // 종료 팡파르
     renderTimerBar(false);
-    setTimeout(() => showResult(), 700);
+    setTimeout(() => showResult(), 500);
   }
 
   /* ── 결과 화면 ─────────────────────────────────── */
@@ -354,6 +372,10 @@ const Game = (() => {
     return arr;
   }
 
-  window.addEventListener('DOMContentLoaded', init);
+  // 페이지 로드 시: UI 초기화 + 모든 이미지 사전 로드 시작
+  window.addEventListener('DOMContentLoaded', () => {
+    init();
+    preloadAllImages(); // 시작 화면에 있는 동안 백그라운드로 사진 전부 캐시
+  });
   return { start, pick };
 })();
