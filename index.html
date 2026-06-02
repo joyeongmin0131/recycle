@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>분리수거 챌린지</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── 시작 화면 ─────────────────────────────── -->
+  <div id="screen-start" class="screen active">
+    <div class="card start-card">
+      <div class="logo">♻️</div>
+      <h1 id="game-title">분리수거 챌린지</h1>
+      <p id="game-subtitle">30초 동안 최대한 많이 맞혀보세요!</p>
+
+      <div class="category-preview" id="category-preview"></div>
+
+      <div class="meta-info">
+        <span>⭐ <strong id="bonus-info">15</strong>% 확률로 5점 보너스</span>
+      </div>
+
+      <div class="time-select-wrap">
+        <span class="time-label">⏱ 게임 시간</span>
+        <div class="time-select">
+          <button class="btn-time active" data-time="30" onclick="Game.setTime(30)">30초</button>
+          <button class="btn-time"        data-time="20" onclick="Game.setTime(20)">20초</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="Game.start()">게임 시작</button>
+    </div>
+  </div>
+
+  <!-- ── 게임 화면 ─────────────────────────────── -->
+  <div id="screen-game" class="screen">
+    <div class="game-wrap">
+
+      <!-- 전체 게임 타이머 바 -->
+      <div class="timer-bar-wrap">
+        <div class="timer-bar-track">
+          <div class="timer-bar-fill" id="game-timer-bar"></div>
+        </div>
+        <span class="timer-bar-num" id="game-timer-num">30</span>
+      </div>
+
+      <!-- 점수 + 정답수 -->
+      <div class="top-bar">
+        <div class="stat">
+          <span class="stat-label">점수</span>
+          <div class="score-row">
+            <span class="stat-val" id="score">0</span>
+            <span class="score-popup" id="score-popup"></span>
+          </div>
+        </div>
+        <div class="stat right-stat">
+          <span class="stat-label">정답 / 시도</span>
+          <span class="stat-val">
+            <span id="q-correct">0</span> / <span id="q-total">0</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- 이미지 -->
+      <div class="img-box">
+        <img id="trash-img" src="" alt="쓰레기 사진"
+             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22220%22%3E%3Crect width=%22300%22 height=%22220%22 fill=%22%23334%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2248%22%3E🖼️%3C/text%3E%3Ctext x=%2250%25%22 y=%2268%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-size=%2215%22%3E이미지를 찾을 수 없습니다%3C/text%3E%3C/svg%3E'" />
+        <div class="bonus-badge" id="bonus-badge"></div>
+        <div class="answer-reveal" id="answer-reveal"></div>
+      </div>
+
+      <!-- 선택 버튼 4개 -->
+      <div class="btn-grid" id="btn-grid"></div>
+
+      <!-- 피드백 -->
+      <div class="feedback" id="feedback"></div>
+
+    </div>
+  </div>
+
+  <!-- ── 결과 화면 ─────────────────────────────── -->
+  <div id="screen-result" class="screen">
+    <div class="card result-card">
+      <div class="result-emoji" id="r-emoji"></div>
+      <h2 id="r-title"></h2>
+      <div class="score-big" id="r-score-big">0<span class="pts-label">점</span></div>
+      <div class="result-detail">
+        정답 <strong id="r-correct">0</strong> / <strong id="r-total">0</strong> 문제
+      </div>
+      <p id="r-msg"></p>
+
+      <div class="review-list" id="review-list"></div>
+
+      <button class="btn-primary" onclick="Game.start()">다시 하기</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
