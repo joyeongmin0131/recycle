@@ -68,7 +68,6 @@ const SFX = (() => {
 const Game = (() => {
 
   // ── 상태 변수 ──────────────────────────────────
-  let selectedTime = CONFIG.gameDuration; // 플레이어가 선택한 게임 시간 (기본값)
   let gameTimerId  = null;   // setInterval ID (타이머 멈출 때 필요)
   let gameTimeLeft = 0;      // 남은 시간 (초)
   let score          = 0;   // 현재 총점
@@ -101,14 +100,6 @@ const Game = (() => {
       </button>`).join('');
   }
 
-  /* ── 시간 선택 (시작 화면 버튼) ───────────────── */
-  function setTime(t) {
-    selectedTime = t;
-    document.querySelectorAll('.btn-time').forEach(b => {
-      b.classList.toggle('active', parseInt(b.dataset.time) === t);
-    });
-  }
-
   /* ── 게임 시작 / 재시작 ────────────────────────── */
   function start() {
     score           = 0;
@@ -116,7 +107,7 @@ const Game = (() => {
     correctAnswered = 0;
     results         = [];
     pool            = [];
-    gameTimeLeft    = selectedTime;   // 선택한 시간 사용
+    gameTimeLeft    = CONFIG.gameDuration;
 
     showEl('score',     0);
     showEl('q-correct', 0);
@@ -159,7 +150,7 @@ const Game = (() => {
       });
     }
 
-    const pct = Math.max(0, gameTimeLeft / selectedTime * 100);
+    const pct = Math.max(0, gameTimeLeft / CONFIG.gameDuration * 100);
     bar.style.width = pct + '%';
     num.textContent = gameTimeLeft;
 
@@ -167,8 +158,8 @@ const Game = (() => {
     bar.classList.remove('warn', 'danger');
     num.classList.remove('warn', 'danger');
     // 남은 시간이 전체의 1/6 이하면 danger, 1/3 이하면 warn
-    const warnAt   = Math.ceil(selectedTime / 3);
-    const dangerAt = Math.ceil(selectedTime / 6);
+    const warnAt   = Math.ceil(CONFIG.gameDuration / 3);
+    const dangerAt = Math.ceil(CONFIG.gameDuration / 6);
     if (gameTimeLeft <= dangerAt) {
       bar.classList.add('danger');
       num.classList.add('danger');
@@ -364,5 +355,5 @@ const Game = (() => {
   }
 
   window.addEventListener('DOMContentLoaded', init);
-  return { start, pick, setTime };
+  return { start, pick };
 })();
