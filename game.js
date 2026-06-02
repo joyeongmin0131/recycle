@@ -307,9 +307,9 @@ const Game = (() => {
 
     // 점수에 따른 등급 메시지
     let emoji, title, msg;
-    if (score >= 20)      { emoji = '🏆'; title = '분리수거 마스터!'; msg = '환경을 지키는 진정한 영웅이에요!'; }
-    else if (score >= 12) { emoji = '👍'; title = '잘 했어요!';       msg = '조금만 더 연습하면 완벽해질 거예요!'; }
-    else if (score >= 6)  { emoji = '🤔'; title = '아쉬워요!';        msg = '분리수거 방법을 다시 공부해봐요!'; }
+    if (score >= 10)      { emoji = '🏆'; title = '분리수거 마스터!'; msg = '환경을 지키는 진정한 영웅이에요!'; }
+    else if (score >= 5) { emoji = '👍'; title = '잘 했어요!';       msg = '조금만 더 연습하면 완벽해질 거예요!'; }
+    else if (score >= 2)  { emoji = '🤔'; title = '아쉬워요!';        msg = '분리수거 방법을 다시 공부해봐요!'; }
     else                  { emoji = '😅'; title = '다시 도전!';       msg = '함께 분리수거 방법을 배워봐요!'; }
 
     showEl('r-emoji', emoji);
