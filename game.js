@@ -202,12 +202,16 @@ const Game = (() => {
     currentQ = getNextQ();
     isBonus  = Math.random() < CONFIG.bonusChance; // 15% 확률로 보너스
 
-    // 버튼 초기화
+    // 버튼 즉시 초기화 (transition 없이 색을 바로 비움)
     CONFIG.categories.forEach((_, i) => {
       const b = btn(i);
-      b.className = 'btn-cat';
+      b.style.transition = 'none';          // 트랜지션 일시 중단
+      b.className = 'btn-cat';              // correct/wrong/dim 클래스 제거
       b.style.setProperty('--c', CONFIG.categories[i].color);
       b.disabled = false;
+      requestAnimationFrame(() => {
+        b.style.transition = '';            // 다음 프레임부터 hover 효과 복구
+      });
     });
 
     clearFeedback();
