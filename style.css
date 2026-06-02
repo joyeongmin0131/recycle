@@ -193,9 +193,18 @@ p  { color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 20px; }
   font-family: inherit;
 }
 .btn-cat .ico { font-size: 1.6rem; line-height: 1; }
-.btn-cat:hover:not(:disabled) {
-  background: var(--c); transform: scale(1.04);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+/* 마우스 기기에서만 hover 효과 적용 (모바일 sticky hover 방지) */
+@media (hover: hover) and (pointer: fine) {
+  .btn-cat:hover:not(:disabled) {
+    background: var(--c);
+    transform: scale(1.04);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+}
+/* 터치 기기 탭 피드백 */
+.btn-cat:active:not(:disabled) {
+  background: var(--c);
+  transform: scale(1.02);
 }
 .btn-cat:disabled { cursor: not-allowed; }
 .btn-cat.correct {
